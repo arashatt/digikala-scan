@@ -1,9 +1,11 @@
-    import puppeteer from 'puppeteer-core';
+// https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+import puppeteer from 'puppeteer-core';
+import fs from 'node:fs';
 
 async function digikala (searchQuery, alt) {
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({headless: false, executablePath: "/home/arash/chrome-selenimu/chrome-linux64/chrome"});
+  const browser = await puppeteer.launch({headless: false, executablePath: "chrome-linux/chrome"});
   const page = await browser.newPage();
   await page.setDefaultNavigationTimeout(20000);
   // Navigate the page to a URL
@@ -62,7 +64,8 @@ await newPage.close();
 }
 
 
-digikala("تمییز کننده داخلی موتور", "تمیزکننده داخلی موتور و موتورشوی گات مدل EF حجم 300 میلی لیتر");
+//digikala("تمییز کننده داخلی موتور", "تمیزکننده داخلی موتور و موتورشوی گات مدل EF حجم 300 میلی لیتر");
+main();
 
 //https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore
 async function autoScroll(page){
@@ -87,4 +90,34 @@ async function autoScroll(page){
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+function main(){
+if (process.argv.length <= 2){
+	console.log("Please provide a file path");
+	return;
+}
+let filePath = process.argv[2];
+try {
+	fs.accessSync(filePath, fs.constants.F_OK);
+} catch (err) {
+	console.error('File does not exist');
+	return; // Return from the main function
+}
+const file = fs.readFileSync(filePath, 'utf-8');
+file.split(/\r?\n/).forEach(line =>{
+if(line != ''){
+	let splitAt = line.indexOf(' ');
+let link = line.substring(0, splitAt);
+let query = line.substring( splitAt + 1, line.lenght ) ;
+console.log(link);
+console.log(query);
+digikala(query, link);
+
+
+}
+});
+
 }

@@ -10,7 +10,8 @@ const cpuCount = os.cpus().length;
 console.log(`The total number of CPUs is ${cpuCount}`);
 console.log(`Primary pid=${process.pid}`);
 cluster.setupPrimary({
-  exec: __dirname + "/digikala.js",
+  args:[process.argv[2]],	
+  exec: __dirname + "/digikala.js", 
 });
 
 for (let i = 0; i < cpuCount; i++) {
@@ -21,3 +22,11 @@ cluster.on("exit", (worker, code, signal) => {
   console.log("Starting another worker");
   cluster.fork();
 });
+
+
+cluster.on("error", (worker, code, signal) => {
+  console.log(`worker ${worker.process.pid} error occured`);
+  console.log("Starting another worker");
+  cluster.fork();
+});
+
