@@ -2,7 +2,7 @@
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 
-async function digikala (searchQuery, alt) {
+async function digikala (productID, searchQuery) {
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({headless: false, executablePath: "chrome-linux/chrome"});
@@ -34,13 +34,16 @@ async function digikala (searchQuery, alt) {
 console.log("سرچ تموم شده و دنبال محصول هستم");
   //here I want to express something more elaborate and dificult.
   //I want to get the node of an element which contains my desired href
-  const href = await page.evaluate(() => {
-    let elements = document.querySelectorAll('a[href*="dkp-11551746"]');
+  const href = await page.evaluate(
+	  (productID) => {
+		  console.log(`a[href*="${productID}"]`)
+    let elements = document.querySelectorAll(`a[href*="${productID}"]`);
       if (elements.length > 0){
          return   Array.from(elements).map(element => element.getAttribute('href'));
-      }
-});
-  console.log(href);
+      }},
+	productID
+);
+	
   const product = await page.$(`a[href="${href}"]`);
   if (product != null) {
     console.log("محصول پیدا شد");
@@ -114,7 +117,7 @@ let link = line.substring(0, splitAt);
 let query = line.substring( splitAt + 1, line.lenght ) ;
 console.log(link);
 console.log(query);
-digikala(query, link);
+digikala(link, query);
 
 
 }
