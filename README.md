@@ -11,6 +11,14 @@ please create an input file where each line contains one digikala product along 
 (please note that the beginning of each line shouldn't start with space)<br />
 save this line in input.txt and then run:<br />
 ```$node digikala.js input.txt```
+However, in this you can run the review only once. If you want to have the code make fake view repeatedly please read next section.
+## primary.js, PM2
+
+- primary.js<br />
+  primary.js uses nodejs cluster feature to rerun the code on exit or error. It also fetches the number of cpu's on your machine and runs multiple instances of the program simultaneously. 
+- PM2<br />
+[PM2](https://pm2.keymetrics.io/docs/usage/quick-start/) is a daemon process manager that will help you manage and keep your application online.
+You have to configure it in a way that restarts the program on exit or error.
 
 ## environment variable
 There are some environmental variables defined in this project.
