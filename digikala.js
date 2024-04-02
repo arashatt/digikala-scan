@@ -2,14 +2,9 @@
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 const myBooleanVar = process.env.Headless;
-
-<<<<<<< HEAD
 // Convert the string value to a boolean
 const booleanValue = myBooleanVar && myBooleanVar.toLowerCase() === 'true';
-async function digikala (searchQuery, alt) {
-=======
 async function digikala (productID, searchQuery) {
->>>>>>> 1e5034b8436cd1cb802e262024c182db87378164
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({headless: myBooleanVar, executablePath: "chrome-linux/chrome"});
@@ -41,15 +36,10 @@ async function digikala (productID, searchQuery) {
 console.log("سرچ تموم شده و دنبال محصول هستم");
   //here I want to express something more elaborate and dificult.
   //I want to get the node of an element which contains my desired href
-<<<<<<< HEAD
-  const href = await page.evaluate(() => {
-    let elements = document.querySelectorAll('a[href*="dkp-14591367"]');
-=======
   const href = await page.evaluate(
 	  (productID) => {
 		  console.log(`a[href*="${productID}"]`)
     let elements = document.querySelectorAll(`a[href*="${productID}"]`);
->>>>>>> 1e5034b8436cd1cb802e262024c182db87378164
       if (elements.length > 0){
          return   Array.from(elements).map(element => element.getAttribute('href'));
       }},
