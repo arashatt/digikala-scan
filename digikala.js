@@ -1,11 +1,14 @@
 // https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+const myBooleanVar = process.env.Headless;
 
+// Convert the string value to a boolean
+const booleanValue = myBooleanVar && myBooleanVar.toLowerCase() === 'true';
 async function digikala (searchQuery, alt) {
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({headless: false, executablePath: "chrome-linux/chrome"});
+  const browser = await puppeteer.launch({headless: myBooleanVar, executablePath: "chrome-linux/chrome"});
   const page = await browser.newPage();
   await page.setDefaultNavigationTimeout(20000);
   // Navigate the page to a URL
@@ -18,7 +21,7 @@ async function digikala (searchQuery, alt) {
   
   
 	//click on Digikala search DOM
-  console.log("waiting for element");
+  console.log("waiting for search input element");
   const element = await page.$('.text-neutral-500');
 	if (element!= null)
 	{
@@ -35,7 +38,7 @@ console.log("سرچ تموم شده و دنبال محصول هستم");
   //here I want to express something more elaborate and dificult.
   //I want to get the node of an element which contains my desired href
   const href = await page.evaluate(() => {
-    let elements = document.querySelectorAll('a[href*="dkp-11551746"]');
+    let elements = document.querySelectorAll('a[href*="dkp-14591367"]');
       if (elements.length > 0){
          return   Array.from(elements).map(element => element.getAttribute('href'));
       }
