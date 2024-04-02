@@ -1,13 +1,15 @@
 // https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
-const myBooleanVar = process.env.Headless;
+import dotenv from 'dotenv'
+	dotenv.config();
+const myBooleanVar = process.env.HEADLESS;
 // Convert the string value to a boolean
-const booleanValue = myBooleanVar && myBooleanVar.toLowerCase() === 'true';
+const headless = myBooleanVar && myBooleanVar === 'true';
 async function digikala (productID, searchQuery) {
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({headless: myBooleanVar, executablePath: "chrome-linux/chrome"});
+  const browser = await puppeteer.launch({headless: headless, executablePath: "chrome-linux/chrome"});
   const page = await browser.newPage();
   await page.setDefaultNavigationTimeout(20000);
   // Navigate the page to a URL
