@@ -64,13 +64,16 @@ console.log(newPage.url());
 await newPage.waitForNetworkIdle({waitUntil: 'networkidle2'});
 //https://byby.dev/js-wait-n-seconds
 await autoScroll(newPage);
+const xpath = `//*[text()='افزودن به سبد خرید']`;
+  const cart = await newPage.$x(xpath);
+  if (cart.lenght > 0){
+  console.log("Ok");
+  }
 await newPage.screenshot({path:"page.png"});
 await page.close();
 await newPage.close();
   await browser.close();
 }
-
-
 //digikala("تمییز کننده داخلی موتور", "تمیزکننده داخلی موتور و موتورشوی گات مدل EF حجم 300 میلی لیتر");
 main();
 
