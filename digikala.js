@@ -40,17 +40,17 @@ console.log("سرچ تموم شده و دنبال محصول هستم");
   //here I want to express something more elaborate and difficult.
   //I want to get the node of an element which contains my desired href
   await page.waitForSelector(`a[href*="${productID}"]`);
-  const href = await page.evaluate(
-	  (productID) => {
-		  console.log(`a[href*="${productID}"]`)
-    let elements = document.querySelectorAll(`a[href*="${productID}"]`);
-      if (elements.length > 0){
-         return   Array.from(elements).map(element => element.getAttribute('href'));
-      }},
-	productID
-);
+//  const href = await page.evaluate(
+//	  (productID) => {
+//		  console.log(`a[href*="${productID}"]`)
+//    let elements = document.querySelectorAll(`a[href*="${productID}"]`);
+//      if (elements.length > 0){
+//         return   Array.from(elements).map(element => element.getAttribute('href'));
+//      }},
+//	productID
+//);
 	
-  const product = await page.$(`a[href="${href}"]`);
+  const product = await page.$(`a[href*="${productID}"]`);
   if (product != null) {
     console.log("محصول پیدا شد");
     console.log(product);
@@ -83,7 +83,7 @@ console.log("successfully added to cart");
 	}else{
   await newPage.waitForSelector('picture');
   await newPage.click('picture');
-  await newPage.waitForNetworkIdle('waitForNetworkIdl2');
+  await newPage.waitForNetworkIdle('load');
 
 
 
@@ -92,6 +92,7 @@ await newPage.screenshot({path:"page.png"});
 await page.close();
 await newPage.close();
   await browser.close();
+console.log("I reached the end of function");
 }
 //digikala("تمییز کننده داخلی موتور", "تمیزکننده داخلی موتور و موتورشوی گات مدل EF حجم 300 میلی لیتر");
 main();
@@ -137,15 +138,32 @@ try {
 	return; // Return from the main function
 }
 const file = fs.readFileSync(filePath, 'utf-8');
-file.split(/\r?\n/).forEach(line =>{
-if(line != ''){
-	let splitAt = line.indexOf(' ');
-let link = line.substring(0, splitAt);
-let query = line.substring( splitAt + 1, line.lenght );
-digikala(link, query);
+
+/*forEach doesn't wait for asynchronous operations to complete before moving on
+ *to the next iteration. Instead, you can use a for...of loop with async/await 
+ *to achieve the desired behavior.
+  */
+const lines = file.split(/\r?\n/);
+    for (const line of lines) {
+        console.log("I am parsing a new line", line);
+        if (line !== '') {
+            const splitAt = line.indexOf(' ');
+            const link = line.substring(0, splitAt);
+            const query = line.substring(splitAt + 1, line.length);
+            await digikala(link, query);
+        }
+    }
 
 
-}
-});
-
+//file.split(/\r?\n/).forEach(async (line) =>{
+//  console.log("I am parsing a new line", line);
+//if(line != ''){
+//	let splitAt = line.indexOf(' ');
+//let link = line.substring(0, splitAt);
+//let query = line.substring( splitAt + 1, line.lenght );
+//await (async () =>{ await digikala(link, query);})();
+//
+//}
+//});
+//console.log("reached end of main");
 }
