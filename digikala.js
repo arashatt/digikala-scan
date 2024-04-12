@@ -124,7 +124,7 @@ function wait(ms) {
 
 
 
-function main(){
+async function main(){
 if (process.argv.length <= 2){
 	console.log("Please provide a file path");
 	return;
@@ -141,9 +141,7 @@ file.split(/\r?\n/).forEach(line =>{
 if(line != ''){
 	let splitAt = line.indexOf(' ');
 let link = line.substring(0, splitAt);
-let query = line.substring( splitAt + 1, line.lenght ) ;
-console.log(link);
-console.log(query);
+let query = line.substring( splitAt + 1, line.lenght );
 digikala(link, query);
 
 

@@ -30,3 +30,9 @@ cluster.on("error", (worker, code, signal) => {
   cluster.fork();
 });
 
+cluster.on("death", (worker) => {
+  console.log(`worker ${worker.process.pid} error occured`);
+  console.log("Starting another worker");
+  cluster.fork();
+});
+
