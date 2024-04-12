@@ -11,6 +11,7 @@ async function digikala (productID, searchQuery) {
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({headless: headless, executablePath: "chrome-linux/chrome"});
   const page = await browser.newPage();
+await page.setViewport({ width: 1280, height: 800 }); //added for test
   await page.setDefaultNavigationTimeout(20000);
   // Navigate the page to a URL
   await page.goto(url);
@@ -62,19 +63,31 @@ console.log( (product));
   target.type() === 'page' &&  target.opener() === pageTarget);
 const newPage = await newPagePromise.page();
 console.log(newPage.url());
-await newPage.waitForNetworkIdle({waitUntil: 'networkidle0'});
+await newPage.waitForNetworkIdle({waitUntil: 'newtworkidle0'});
+await newPage.waitForNetworkIdle({waitUntil: 'load'});
+await newPage.waitForNetworkIdle({waitUntil: 'newtworkidle2'});
 //https://byby.dev/js-wait-n-seconds
 //if(Math.random() > 0.5){
-if(true){
-await autoScroll(newPage);
-	}
-	else{
-console.log("add to cart");
-await newPage.waitForSelector('button[data-testid="add-to-cart"]');
-await newPage.click('button[data-testid="add-to-cart"]');
-await newPage.waitForSelector('a[href*="/checkout/cart"]');
+if(false){
+    await autoScroll(newPage);
+}
+else if(false)
+{
+    console.log("add to cart");
+    await newPage.waitForSelector('button[data-testid="add-to-cart"]');
+    await newPage.click('button[data-testid="add-to-cart"]');
+    await newPage.waitForSelector('a[href*="/checkout/cart"]');
+await newPage.waitForSelector('div[id="base_layout_mobile_footer"]');
+await newPage.waitForNetworkIdle({waitUntil: 'newtworkidle2'});
 console.log("successfully added to cart");
-	}
+	}else{
+  await newPage.waitForSelector('picture');
+  await newPage.click('picture');
+  await newPage.waitForNetworkIdle('waitForNetworkIdl2');
+
+
+
+  }
 await newPage.screenshot({path:"page.png"});
 await page.close();
 await newPage.close();
@@ -101,6 +114,7 @@ async function autoScroll(page){
           }, 100);
       });
   });
+  console.log("auto scroll finished");
 }
 
 
