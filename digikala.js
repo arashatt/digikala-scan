@@ -2,11 +2,13 @@
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import dotenv from 'dotenv'
+import { v4 as uuidv4} from 'uuid';
 	dotenv.config();
 const myBooleanVar = process.env.HEADLESS;
 // Convert the string value to a boolean
 const headless = myBooleanVar && myBooleanVar === 'true';
 async function digikala (productID, searchQuery) {
+	console.log("digikala is called");
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({headless: headless, executablePath: "chrome-linux/chrome"});
@@ -68,10 +70,10 @@ await newPage.waitForNetworkIdle({waitUntil: 'load'});
 await newPage.waitForNetworkIdle({waitUntil: 'newtworkidle2'});
 //https://byby.dev/js-wait-n-seconds
 //if(Math.random() > 0.5){
-if(false){
+if(Math.random() > 0.5){
     await autoScroll(newPage);
 }
-else if(false)
+else if(Math.random() > 0.5)
 {
     console.log("add to cart");
     await newPage.waitForSelector('button[data-testid="add-to-cart"]');
@@ -88,7 +90,7 @@ console.log("successfully added to cart");
 
 
   }
-await newPage.screenshot({path:"page.png"});
+await newPage.screenshot({path: "logs/" + uuidv4() + ".png"});
 await page.close();
 await newPage.close();
   await browser.close();
@@ -151,7 +153,9 @@ const lines = file.split(/\r?\n/);
             const link = line.substring(0, splitAt);
             const query = line.substring(splitAt + 1, line.length);
             await digikala(link, query);
-        }
+        }else {
+	break;
+	}
     }
 
 
@@ -165,5 +169,7 @@ const lines = file.split(/\r?\n/);
 //
 //}
 //});
-//console.log("reached end of main");
+console.log("reached end of main");
+process.exit();
+
 }
