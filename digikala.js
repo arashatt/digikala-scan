@@ -34,10 +34,11 @@ async function digikala (productID, searchQuery) {
     await searchInput.type(searchQuery);
     await page.keyboard.press("Enter");
   }
-  await page.waitForNetworkIdle({waitUntil: 'networkidle2'});
+  await page.waitForNetworkIdle({waitUntil: 'networkidle0'});
 console.log("سرچ تموم شده و دنبال محصول هستم");
-  //here I want to express something more elaborate and dificult.
+  //here I want to express something more elaborate and difficult.
   //I want to get the node of an element which contains my desired href
+  await page.waitForSelector(`a[href*="${productID}"]`);
   const href = await page.evaluate(
 	  (productID) => {
 		  console.log(`a[href*="${productID}"]`)
@@ -61,14 +62,19 @@ console.log( (product));
   target.type() === 'page' &&  target.opener() === pageTarget);
 const newPage = await newPagePromise.page();
 console.log(newPage.url());
-await newPage.waitForNetworkIdle({waitUntil: 'networkidle2'});
+await newPage.waitForNetworkIdle({waitUntil: 'networkidle0'});
 //https://byby.dev/js-wait-n-seconds
+//if(Math.random() > 0.5){
+if(true){
 await autoScroll(newPage);
-const xpath = `//*[text()='افزودن به سبد خرید']`;
-  const cart = await newPage.$x(xpath);
-  if (cart.lenght > 0){
-  console.log("Ok");
-  }
+	}
+	else{
+console.log("add to cart");
+await newPage.waitForSelector('button[data-testid="add-to-cart"]');
+await newPage.click('button[data-testid="add-to-cart"]');
+await newPage.waitForSelector('a[href*="/checkout/cart"]');
+console.log("successfully added to cart");
+	}
 await newPage.screenshot({path:"page.png"});
 await page.close();
 await newPage.close();
