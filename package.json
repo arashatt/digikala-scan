@@ -3,6 +3,8 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "dotenvy": "^0.2.0",
-    "puppeteer-core": "^22.6.1"
+    "puppeteer-autoscroll-down": "^2.0.0",
+    "puppeteer-core": "^22.6.4",
+    "uuid": "^9.0.1"
   }
 }
