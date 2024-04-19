@@ -37,7 +37,7 @@ https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots
 If you have not installed chromium or google-chrome installed on your machine, you may lack some shared libraries in order to execute the code, So I find it very usefull to install chrome package beside the chromium browser. However this is a very lazy way to solve the problem.<br />
 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-## A world to Develoers
+## A word to Develoers
 Any suggestion is welcomed. you can open an issue or submit PR.
 ## A word to Digikala
 Please don't sue me!
