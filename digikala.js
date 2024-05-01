@@ -1,3 +1,4 @@
+// https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots
 // https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 // https://nodejs.org/dist/v20.12.2/node-v20.12.2-linux-x64.tar.xz
 // https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04
