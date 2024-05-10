@@ -13,11 +13,10 @@ import { v4 as uuidv4} from 'uuid';
 const myBooleanVar = process.env.HEADLESS;
 // Convert the string value to a boolean
 const headless = myBooleanVar && myBooleanVar === 'true';
-async function digikala (productID, searchQuery) {
+async function digikala (productID, searchQuery, browser) {
 
   let url = "https://www.digikala.com";
   // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({headless: headless, executablePath: "chrome-linux/chrome", args: ["--no-sandbox"]});
   const page = await browser.newPage();
 //await page.setViewport({ width: 1280, height: 800 }); //added for test
   await page.setDefaultNavigationTimeout(20000);
@@ -105,7 +104,6 @@ await newPage.screenshot({path: "logs/" + uuidv4() + ".png"});
 console.log("picture saved");
 await page.close();
 await newPage.close();
-  await browser.close();
 console.log("I reached the end of function");
 }
 //digikala("تمییز کننده داخلی موتور", "تمیزکننده داخلی موتور و موتورشوی گات مدل EF حجم 300 میلی لیتر");
@@ -164,12 +162,18 @@ const lines = file.split(/\r?\n/);
             const splitAt = line.indexOf(' ');
             const link = line.substring(0, splitAt);
             const query = line.substring(splitAt + 1, line.length);
-try{
-            await digikala(link, query);
-}catch(e){
 
+  	   const browser = await puppeteer.launch({headless: headless, executablePath: "chrome-linux/chrome", args: ["--no-sandbox"]});
+try{
+
+	    
+            await digikala(link, query, browser);
+}catch(e){
 console.log(e);
 }    
+
+
+await browser.close();
     }else {
 	break;
 	}
