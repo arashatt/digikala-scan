@@ -75,15 +75,15 @@ await newPage.waitForNetworkIdle({waitUntil: 'load'});
 await newPage.waitForNetworkIdle({waitUntil: 'newtworkidle2'});
 console.log("new page loaded successfuly");
 //https://byby.dev/js-wait-n-seconds
-if(false){
-//if(Math.random() > 0.5){
+//if(false){
+if(Math.random() > 0.5){
 await scrollPageToBottom(newPage, {
   size: 500,
   delay: 250
 });
 
-}else if(true)
-//}else if(Math.random() > 0.5)
+//}else if(true)
+}else if(Math.random() > 0.5)
 {
     console.log("add to cart");
     await newPage.waitForSelector('button[data-testid="add-to-cart"]');
