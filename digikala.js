@@ -100,7 +100,7 @@ console.log("successfully added to cart");
 
 
   }
-await newPage.screenshot({path: "logs/" + uuidv4() + ".png"});
+//await newPage.screenshot({path: "logs/" + uuidv4() + ".png"});
 console.log("picture saved");
 await page.close();
 await newPage.close();

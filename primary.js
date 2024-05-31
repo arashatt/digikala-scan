@@ -14,7 +14,7 @@ cluster.setupPrimary({
   exec: __dirname + "/digikala.js", 
 });
 
-for (let i = 0; i < cpuCount; i++) {
+for (let i = 0; i < 3; i++) {
   cluster.fork();
 }
 cluster.on("exit", (worker, code, signal) => {
