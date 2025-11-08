@@ -1,6 +1,6 @@
 Please follow me and ⭐ this project. Thanks!
 ## project description
-This project is created to make fake views on digikala using Puppeteer headless Chrome.
+This project is created to scrape data from digikala using Puppeteer headless Chrome.
 ![Screenshot from 2024-03-28 17-17-24](https://github.com/arashatt/digikala-scan/assets/55944526/53780061-9fc0-4f1f-a179-15988a91544d)
 
 ## how to run the code
